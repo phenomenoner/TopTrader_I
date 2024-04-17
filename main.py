@@ -1,3 +1,5 @@
+import time
+
 import pandas as pd
 import numpy as np
 import logging
@@ -138,6 +140,7 @@ class TopTrader:
 
             # 4. 添加新列 "market"，所有值設置為 NaN
             df['market'] = np.nan
+            df['market'] = df['market'].astype('object')
 
             # 5. 添加市場 "market" 類型訊息
             for index, row in df.iterrows():
@@ -165,7 +168,7 @@ class TopTrader:
 
         # 讀取並設置交易列表
         try:
-            self.trade_df = pd.read_excel(filepath, header=None)
+            self.trade_df = pd.read_excel(filepath, header=None, dtype=str)
             self.trade_df.columns = ["symbol", "target_lot", "limit_price"]
         except FileNotFoundError as e:
             self.logger.error(f"找不到檔案 {filepath}, 錯誤訊息 {e}")
@@ -199,7 +202,10 @@ class TopTrader:
 
         # 執行下單
         self.is_trade_active = True
+
         asyncio.run(self.__trader())
+
+        self.is_trade_active = False
 
         return True
 
@@ -263,7 +269,10 @@ class TopTrader:
         market = row["market"]
 
         # 計算差異張數
-        trade_lot = target_lot - self.inventories[symbol] if symbol in self.inventories else target_lot
+        inventory_qty = self.inventories[symbol] if symbol in self.inventories else 0
+        trade_lot = target_lot - inventory_qty
+
+        self.logger.debug(f"股號 {symbol}, 目標張數 {target_lot}, 現有庫存 {inventory_qty}, 買賣 {trade_lot} 張")
 
         if abs(trade_lot) > 0:
             # 建立委託單
@@ -290,25 +299,34 @@ class TopTrader:
 if __name__ == '__main__':
     global LOGGER
 
-    utils.mk_folder("logs")
-    LOGGER = utils.get_logger("TopTrader",
-                              "logs/TopTrader.log",
-                              log_level=logging.DEBUG
-                              )
+    try:
+        utils.mk_folder("log")
+        LOGGER = utils.get_logger("TopTrader",
+                                  "log/TopTrader.log",
+                                  log_level=logging.DEBUG
+                                  )
 
-    # 讀取帳號密碼資料進入環境變數
-    load_dotenv()
+        # 讀取帳號密碼資料進入環境變數
+        load_dotenv()
 
-    id = os.getenv('ID')
-    pwd = os.getenv('PWD')
-    cert_filepath = os.getenv('CPATH')
-    certpwd = os.getenv('CPWD')
+        id = os.getenv('ID')
+        pwd = os.getenv('PWD')
+        cert_filepath = os.getenv('CPATH')
+        certpwd = os.getenv('CPWD')
 
-    account = os.getenv('ACCOUNT')
-    trade_list_filepath = os.getenv('TRADELIST')
+        account = os.getenv('ACCOUNT')
+        trade_list_filepath = os.getenv('TRADELIST')
 
-    # 建立 TopTrader
-    top_trader = TopTrader(id, pwd, cert_filepath, certpwd)
+        # 建立 TopTrader
+        top_trader = TopTrader(id, pwd, cert_filepath, certpwd)
 
-    # 啟動 TopTrader
-    top_trader.run(account, trade_list_filepath)
+        # 啟動 TopTrader
+        top_trader.run(account, trade_list_filepath)
+
+    except Exception as e:
+        LOGGER.error(f"{e}")
+
+    finally:
+        # 程式結束
+        print("Press Enter to exit...")
+        input()
