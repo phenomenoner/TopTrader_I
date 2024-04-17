@@ -168,7 +168,7 @@ class TopTrader:
 
         # 讀取並設置交易列表
         try:
-            self.trade_df = pd.read_excel(filepath, header=None, dtype=str)
+            self.trade_df = pd.read_excel(filepath, dtype=str)
             self.trade_df.columns = ["symbol", "target_lot", "limit_price"]
         except FileNotFoundError as e:
             self.logger.error(f"找不到檔案 {filepath}, 錯誤訊息 {e}")
