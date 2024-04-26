@@ -11,7 +11,6 @@ certpwd = os.getenv('CPWD')
 
 target_account = os.getenv('ACCOUNT')
 trade_list_filepath = os.getenv('TRADELIST')
-dev_server = os.getenv('SERVER')
 
 print("交易目標清單路徑:", trade_list_filepath)
 print("下單帳號:", target_account)
@@ -20,8 +19,7 @@ print("下單帳號:", target_account)
 
 from fubon_neo.sdk import FubonSDK
 # 連接主機
-sdk = FubonSDK(dev_server)
-# sdk = FubonSDK()
+sdk = FubonSDK()
 
 # 登入取得帳號列表
 response = sdk.login(
