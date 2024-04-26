@@ -24,12 +24,12 @@ https://discord.com/invite/VHjjc4C
 
 ## 登入設定
 在程式資料夾中新建檔案 `.env` 並輸入以下內容<br>
-> ID= #身份證字號
-> PWD= #交易密碼
-> CPATH= #憑證路徑
-> CPWD= #憑證密碼
-> ACCOUNT= #帳號
-> TRADELIST=trade_list_example.xlsx #交易目標清單
+> ID= #身份證字號<br>
+> PWD= #交易密碼<br>
+> CPATH= #憑證路徑<br>
+> CPWD= #憑證密碼<br>
+> ACCOUNT= #帳號<br>
+> TRADELIST=trade_list_example.xlsx #交易目標清單<br>
 
 
 ## 互動執行環境設定說明(for `my_assistant.py`)
