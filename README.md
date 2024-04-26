@@ -13,9 +13,9 @@ https://www.fbs.com.tw/TradeAPI/docs/trading/introduction
 https://discord.com/invite/VHjjc4C
 
 ## 檔案列表
-`main.py` - 主程式
-`trade_list_example.xlsx` - 交易標的設定表
-`my_assistant.py` - 互動式執行版
+`main.py` - 主程式<br>
+`trade_list_example.xlsx` - 交易標的設定表<br>
+`my_assistant.py` - 互動式執行版<br>
 
 ## 安裝封包
 `pip install -r requirements.txt`<br>
