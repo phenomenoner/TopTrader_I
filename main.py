@@ -70,7 +70,7 @@ class TopTrader:
         self.accounts = None
 
         # 連接主機
-        self.sdk = FubonSDK("ws://10.81.70.178/TASP/XCPXWS")
+        self.sdk = FubonSDK()
 
         # 登入取得帳號列表
         response = self.sdk.login(
