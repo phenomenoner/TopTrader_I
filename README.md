@@ -15,7 +15,9 @@ https://discord.com/invite/VHjjc4C
 ## 檔案列表
 `main.py` - 主程式<br>
 `trade_list_example.xlsx` - 交易標的設定表<br>
-`my_assistant.py` - 互動式執行版<br>
+`my_assistant.py` - 互動式執行版（功能與main.py等同，可於互動執行環境執行）<br>
+<br>
+***註：互動執行環境設定方式，可參考後文說明***
 
 ## 安裝封包
 `pip install -r requirements.txt`<br>
