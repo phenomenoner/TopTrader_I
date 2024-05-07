@@ -42,6 +42,6 @@ https://discord.com/invite/VHjjc4C
     https://code.visualstudio.com/docs/python/jupyter-support-py
     
 
-### 編譯執行檔
+## 編譯執行檔
 若有想使用Pyinstaller將程式碼編譯成執行檔，建議配合anaconda環境使用以下指令安裝套件
 * conda install -c conda-forge pyinstaller
